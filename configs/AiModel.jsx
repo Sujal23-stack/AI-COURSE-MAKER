@@ -19,7 +19,7 @@ const {
     responseMimeType: "application/json",
   };
   export const generateChapterContent = async (topic, chapterName) => {
-  const prompt = `Explain the topic "${topic}" in detail for the chapter "${chapterName}" in beginner-friendly HTML content. Include examples and semantic formatting.`;
+  const prompt = `Explain the topic "${topic}" in detail for the chapter "${chapterName}" in according to their topic depth organize properly using your knowledge`;
 
   try {
     const result = await model.generateContent(prompt);

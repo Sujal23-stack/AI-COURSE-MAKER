@@ -30,7 +30,7 @@ export default function Page() {
           Welcome to My Project 
         </h2>
 
-        <p className="mt-4 leading-relaxed text-white/90">
+        <p className="mt-4 Fleading-relaxed text-white/90">
        Ai-course-Generation 
         </p>
       </div>
@@ -60,12 +60,11 @@ export default function Page() {
           </a>
 
           <h1 className="mt-2 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
-            Welcome to Squid 🦑
+            Welcome to My Project
           </h1>
 
           <p className="mt-4 leading-relaxed text-gray-500">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi nam dolorum aliquam,
-            quibusdam aperiam voluptatum.
+            Sign-Up and Use Ai-course Generator
           </p>
         </div>
 

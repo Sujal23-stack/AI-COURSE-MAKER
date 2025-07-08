@@ -1,62 +1,82 @@
-"use client"
-import { Progress } from '@/components/ui/progress';
-import Image from 'next/image';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import React from 'react';
-import {
-  HiHome,
-  HiOutlineShieldCheck,
-  HiOutlineSquare3Stack3D,
-  HiPower,
-} from 'react-icons/hi2';
+"use client";
+import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
+import { HiMenu, HiX } from "react-icons/hi";
+import { usePathname } from "next/navigation";
+import Image from "next/image";
 
-function SideBar({ onClose }) {
+const Sidebar = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const path = usePathname();
+  const sidebarRef = useRef();
 
-  const Menu = [
-    { id: 1, name: 'Home', icon: <HiHome />, path: '/dashboard' },
-    { id: 2, name: 'Explore', icon: <HiOutlineSquare3Stack3D />, path: '/dashboard/explore' },
-    { id: 3, name: 'Your Courses', icon: <HiOutlineShieldCheck />, path: '/dashboard/user_courses' },
-    { id: 4, name: 'Logout', icon: <HiPower />, path: '/' },
+  const menuItems = [
+    { id: 1, name: "Home", path: "/dashboard" },
+    { id: 2, name: "Explore", path: "/dashboard/explore" },
+    { id: 3, name: "Your Courses", path: "/dashboard/user_courses" },
+    { id: 4, name: "Logout", path: "/" },
   ];
 
+  // Close sidebar when clicked outside
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(e.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    } else {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    }
+
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, [isOpen]);
+
   return (
-<aside className="h-full w-64 p-5 bg-white shadow-md flex flex-col justify-between">
-
-      <Link href='/dashboard'>
-        <div className='flex items-center font-bold text-xl'>
-          <Image src='/online-education.png' alt='logo' width={40} height={40} />
-          <span className='ml-2'>Course Maker AI</span>
+    <>
+      {/* Hamburger Button for small screens */}
+      <div className="md:hidden flex justify-between items-center p-4 shadow">
+        <div className="flex items-center gap-2">
+          <Image src="/online-education.png" alt="logo" width={30} height={30} />
+          <h2 className="text-lg font-semibold">Course Maker AI</h2>
         </div>
-      </Link>
+        <button onClick={() => setIsOpen(!isOpen)}>
+          {isOpen ? <HiX size={26} /> : <HiMenu size={26} />}
+        </button>
+      </div>
 
-      <hr className='my-5' />
+      {/* Sidebar Panel */}
+      <div
+        ref={sidebarRef}
+        className={`fixed top-0 left-0 h-full w-64 bg-white shadow-md p-5 z-50 transform transition-transform duration-300 ease-in-out 
+        ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:static md:block`}
+      >
+        <Link href={"/dashboard"}>
+          <div className="flex font-bold text-xl items-center mb-4">
+            <Image src={"/online-education.png"} alt="logo" width={40} height={40} />
+            <h2 className="ml-2">Course Maker AI</h2>
+          </div>
+        </Link>
 
-      <ul>
-        {Menu.map((item) => (
-          <Link
-            href={item.path}
-            key={item.id}
-            onClick={onClose} // Close on mobile tap
-            className={`flex items-center gap-3 p-3 mb-2 rounded-lg cursor-pointer
-              ${path === item.path ? 'bg-gray-100 text-black' : 'text-gray-600'}
-              hover:bg-gray-100 hover:text-black`}
-          >
-            <span className='text-2xl'>{item.icon}</span>
-            <span>{item.name}</span>
-          </Link>
-        ))}
-      </ul>
-<div className='w-full'>
-  <Progress value={33} />
-  <p className='text-sm mt-2'>3 of 5 Courses Created</p>
-  <p className='text-xs text-gray-500'>Upgrade for unlimited generation</p>
-</div>
+        <hr className="my-5" />
 
-    
-    </aside>
+        <ul>
+          {menuItems.map((item) => (
+            <Link key={item.id} href={item.path}>
+              <div
+                className={`flex items-center gap-3 p-3 rounded-lg mb-2 cursor-pointer hover:bg-gray-100 
+                ${item.path === path ? "bg-gray-200 text-black" : "text-gray-600"}`}
+              >
+                <span className="text-sm font-medium">{item.name}</span>
+              </div>
+            </Link>
+          ))}
+        </ul>
+      </div>
+    </>
   );
-}
+};
 
-export default SideBar;
+export default Sidebar;
