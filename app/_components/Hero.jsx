@@ -18,7 +18,7 @@ function Hero() {
 
           <div className="mt-8 flex justify-center lg:justify-start">
             <a
-              href="http://192.168.56.1:3000/dashboard"
+              href="https://ai-course-maker-1qt4.vercel.app/dashboard"
               className="inline-block rounded-md bg-blue-600 px-8 py-3 text-sm font-medium text-white transition hover:bg-blue-700 shadow-lg"
             >
               Get Started
