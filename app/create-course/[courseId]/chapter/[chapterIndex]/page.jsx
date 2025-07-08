@@ -54,7 +54,7 @@ function ChapterPage() {
 
       {/* A4 scrollable wrapper */}
       <div
-        className="w-full max-w-[850px] h-[calc(100vh-250px)] overflow-y-scroll bg-white shadow-md border px-10 py-6 rounded-lg prose"
+        className="w-full bg-white shadow-md border px-10 py-6 rounded-lg prose"
         style={{ fontSize: "1rem" }}
         dangerouslySetInnerHTML={{ __html: chapter.htmlContent }}
       />
